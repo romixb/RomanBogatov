@@ -1,11 +1,17 @@
+
 import javafx.beans.property.SetProperty;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.System.setProperty;
@@ -33,7 +39,30 @@ public class SimpleTest {
 
         //Good practice - priorly import static method e.g. Assert to minimize code
         //Assert.assertEquals(driver.getTitle(), "Home Page");
+
+        //Assert Title
         assertEquals(driver.getTitle(), "Home Page");
+
+
+        //Key combination doesn't open ne tab, why?
+//        driver.findElement(By.tagName("body")).sendKeys(Keys.chord(Keys.CONTROL, "t"));
+        //or
+//        String selectLinkOpeninNewTab = Keys.chord(Keys.CONTROL,"t");
+//        driver.findElement(By.tagName("body")).sendKeys(selectLinkOpeninNewTab);
+
+
+        //WebElements
+
+        //Login
+
+        driver.findElement(By.cssSelector(".profile-photo")).click();
+        driver.findElement(By.cssSelector("#Name")).sendKeys("epam");
+        driver.findElement(By.cssSelector("#Password")).sendKeys("1234");
+
+        //Why not use selector by class ".fa-sign-in"?
+        driver.findElement(By.cssSelector(".login [type = 'submit']")).click();
+
+
 
 
         driver.close();
