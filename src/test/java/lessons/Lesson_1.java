@@ -1,3 +1,4 @@
+package lessons;
 
 import javafx.beans.property.SetProperty;
 import org.openqa.selenium.By;
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 import static java.lang.System.setProperty;
 import static org.testng.Assert.assertEquals;
 
-public class SimpleTest {
+public class Lesson_1 {
     @Test
     public void simpleTest(){
 
