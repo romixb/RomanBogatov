@@ -69,13 +69,12 @@ public class HomeWorkOne {
     }
 
 //    4.Assert User name in the left-top side of screen that user is logged
-    @Test
-    public void assertUserName(){
-        String userName = driver.findElement(By.cssSelector(".profile-photo span")).getText();
+    @Test(dependsOnMethods = {"loginActions"})
+    public void assertUserName() {
+        WebElement userNameElement = driver.findElement(By.cssSelector(".profile-photo span"));
+        assertEquals(userNameElement.getText(), getUserName());
 
-        assertEquals(userName, getUserName());
     }
-
 
     @AfterClass
     public void closeBrowser(){
