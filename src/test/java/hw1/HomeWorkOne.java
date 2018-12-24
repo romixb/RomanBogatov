@@ -7,9 +7,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class HomeWorkOne {
 
@@ -33,9 +37,22 @@ public class HomeWorkOne {
 
     private String getUserName() {
         return "PITER CHAILOVSKII";
-
     }
 
+    private int getExpectedNavSize() {
+        return 4;
+    }
+
+    private ArrayList<String> getExpectedNavBarText() {
+        return new ArrayList<String>() {
+            {
+                add("HOME");
+                add("CONTACT FORM");
+                add("SERVICE");
+                add("METALS & COLORS");
+            }
+        };
+        }
 
 
     @BeforeClass
@@ -43,7 +60,7 @@ public class HomeWorkOne {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-//        Why this doesn't work if invoked in next @Test??
+//        Why this doesn't work if invoked in next @Test?
         driver.navigate().to(getTargetURl());
    }
 
@@ -73,7 +90,20 @@ public class HomeWorkOne {
     public void assertUserName() {
         WebElement userNameElement = driver.findElement(By.cssSelector(".profile-photo span"));
         assertEquals(userNameElement.getText(), getUserName());
+    }
 
+//    5.Assert that there are 4 items on the header section are displayed and they have proper texts
+    @Test
+    public void navBarTest() {
+        WebElement webElement = driver.findElement(By.cssSelector(".navbar-nav.m-l8"));
+        List<WebElement> navElems = webElement.findElements(By.cssSelector(".navbar-nav.m-l8 > li"));
+        assertEquals(navElems.size(), getExpectedNavSize());
+//        Comparing Text in navigation bar li elems with List of expected Strings
+        //TODO: Refactor assert logic
+        for (WebElement li : navElems
+        ) {
+            assertTrue(getExpectedNavBarText().contains(li.getText()));
+        }
     }
 
     @AfterClass
@@ -81,3 +111,5 @@ public class HomeWorkOne {
        driver.close();
    }
 }
+
+
