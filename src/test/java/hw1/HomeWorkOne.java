@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.ArrayList;
@@ -27,15 +26,15 @@ public class HomeWorkOne {
         return "Home Page";
     }
 
-    private String getUser() {
+    private String getTestUser() {
         return "epam";
     }
 
-    private String getPassword() {
+    private String getTestPassword() {
         return "1234";
     }
 
-    private String getUserName() {
+    private String getExpectedUserName() {
         return "PITER CHAILOVSKII";
     }
 
@@ -53,8 +52,7 @@ public class HomeWorkOne {
             }
         };
         }
-
-
+//----------------------------------------------------------------------------------------------------------------------
     @BeforeClass
     public void launchBrowser(){
         driver = new ChromeDriver();
@@ -63,35 +61,41 @@ public class HomeWorkOne {
 //        Why this doesn't work if invoked in next @Test?
         driver.navigate().to(getTargetURl());
    }
-
+//----------------------------------------------------------------------------------------------------------------------
 //   1. Open test site by URL
     @Test
     public void navigateTo(){
        driver.navigate().to(getTargetURl());
     }
-
+//----------------------------------------------------------------------------------------------------------------------
 //    2. Assert Browser title
     @Test
     public void assertTitle(){
        assertEquals(driver.getTitle(), getExpectedTitle());
     }
-
+//----------------------------------------------------------------------------------------------------------------------
 //    3.Perform login
     @Test
     public void loginActions(){
         driver.findElement(By.cssSelector(".profile-photo")).click();
-        driver.findElement(By.cssSelector("#Name")).sendKeys(getUser());
-        driver.findElement(By.cssSelector("#Password")).sendKeys(getPassword());
+        driver.findElement(By.cssSelector("#Name")).sendKeys(getTestUser());
+        driver.findElement(By.cssSelector("#Password")).sendKeys(getTestPassword());
         driver.findElement(By.cssSelector(".login [type = 'submit']")).click();
     }
-
+//----------------------------------------------------------------------------------------------------------------------
 //    4.Assert User name in the left-top side of screen that user is logged
     @Test(dependsOnMethods = {"loginActions"})
     public void assertUserName() {
         WebElement userNameElement = driver.findElement(By.cssSelector(".profile-photo span"));
-        assertEquals(userNameElement.getText(), getUserName());
+        assertEquals(userNameElement.getText(), getExpectedUserName());
     }
-
+//----------------------------------------------------------------------------------------------------------------------
+//    5. Assert Browser title
+    @Test
+    public void assertTitle2(){
+        assertEquals(driver.getTitle(), getExpectedTitle());
+    }
+//----------------------------------------------------------------------------------------------------------------------
 //    5.Assert that there are 4 items on the header section are displayed and they have proper texts
     @Test
     public void navBarTest() {
@@ -105,7 +109,12 @@ public class HomeWorkOne {
             assertTrue(getExpectedNavBarText().contains(li.getText()));
         }
     }
-
+//----------------------------------------------------------------------------------------------------------------------
+//    7. Assert that there are 4 images on the Index Page and they are displayed
+    @Test
+    
+//----------------------------------------------------------------------------------------------------------------------
+//    17.Close browser
     @AfterClass
     public void closeBrowser(){
        driver.close();
