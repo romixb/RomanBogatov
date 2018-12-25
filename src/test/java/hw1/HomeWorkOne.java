@@ -42,7 +42,7 @@ public class HomeWorkOne {
         return 4;
     }
 
-    private ArrayList<String> getExpectedNavBarText() {
+    private List<String> getExpectedNavBarText() {
         return new ArrayList<String>() {
             {
                 add("HOME");
@@ -51,7 +51,27 @@ public class HomeWorkOne {
                 add("METALS & COLORS");
             }
         };
-        }
+    }
+
+    private  List<String> getExpectedText(){
+        return new ArrayList<String>(){
+            {   //received values via IDEA Evaluate
+                add("To include good practices\n" +
+                        "and ideas from successful\n" +
+                        "EPAM project");
+                add("To be flexible and\n" +
+                        "customizable");
+                add("To be multiplatform");
+                add("Already have good base\n" +
+                        "(about 20 internal and\n" +
+                        "some external projects),\n" +
+                        "wish to get more…");
+            }
+        };
+    }
+
+
+
 //----------------------------------------------------------------------------------------------------------------------
     @BeforeClass
     public void launchBrowser(){
@@ -70,13 +90,13 @@ public class HomeWorkOne {
 //----------------------------------------------------------------------------------------------------------------------
 //    2. Assert Browser title
     @Test
-    public void assertTitle(){
+    public void checkTitle(){
        assertEquals(driver.getTitle(), getExpectedTitle());
     }
 //----------------------------------------------------------------------------------------------------------------------
 //    3.Perform login
     @Test
-    public void loginActions(){
+    public void checkLoginActions(){
         driver.findElement(By.cssSelector(".profile-photo")).click();
         driver.findElement(By.cssSelector("#Name")).sendKeys(getTestUser());
         driver.findElement(By.cssSelector("#Password")).sendKeys(getTestPassword());
@@ -84,35 +104,62 @@ public class HomeWorkOne {
     }
 //----------------------------------------------------------------------------------------------------------------------
 //    4.Assert User name in the left-top side of screen that user is logged
-    @Test(dependsOnMethods = {"loginActions"})
-    public void assertUserName() {
+    @Test(dependsOnMethods = {"checkLoginActions"})
+    public void checkUserName() {
         WebElement userNameElement = driver.findElement(By.cssSelector(".profile-photo span"));
         assertEquals(userNameElement.getText(), getExpectedUserName());
     }
 //----------------------------------------------------------------------------------------------------------------------
 //    5. Assert Browser title
     @Test
-    public void assertTitle2(){
+    public void checkTitle2(){
         assertEquals(driver.getTitle(), getExpectedTitle());
     }
 //----------------------------------------------------------------------------------------------------------------------
 //    5.Assert that there are 4 items on the header section are displayed and they have proper texts
     @Test
-    public void navBarTest() {
-        WebElement webElement = driver.findElement(By.cssSelector(".navbar-nav.m-l8"));
-        List<WebElement> navElems = webElement.findElements(By.cssSelector(".navbar-nav.m-l8 > li"));
+    public void checkNavBar() {
+        List<WebElement> navElems = driver.findElements(By.cssSelector(".navbar-nav.m-l8 > li"));
         assertEquals(navElems.size(), getExpectedNavSize());
 //        Comparing Text in navigation bar li elems with List of expected Strings
-        //TODO: Refactor assert logic
-        for (WebElement li : navElems
-        ) {
-            assertTrue(getExpectedNavBarText().contains(li.getText()));
-        }
+//        TODO: Refactor assert logic
+//        for (WebElement li : navElems
+//        ) {
+//            assertTrue(getExpectedNavBarText().contains(li.getText()));
+//        }
+        assertEquals(navElems.get(0).getText(),getExpectedNavBarText().get(0));
+        assertEquals(navElems.get(1).getText(),getExpectedNavBarText().get(1));
+        assertEquals(navElems.get(2).getText(),getExpectedNavBarText().get(2));
+        assertEquals(navElems.get(3).getText(),getExpectedNavBarText().get(3));
     }
 //----------------------------------------------------------------------------------------------------------------------
 //    7. Assert that there are 4 images on the Index Page and they are displayed
     @Test
-    
+    public void checkPageImages() {
+        WebElement pageImg = driver.findElement(By.cssSelector(".icon-practise"));
+        assertTrue(pageImg.isDisplayed());
+
+        pageImg = driver.findElement(By.cssSelector(".icon-custom"));
+        assertTrue(pageImg.isDisplayed());
+
+        pageImg = driver.findElement(By.cssSelector(".icon-multi"));
+        assertTrue(pageImg.isDisplayed());
+
+        pageImg = driver.findElement(By.cssSelector(".icon-base"));
+        assertTrue(pageImg.isDisplayed());
+    }
+//----------------------------------------------------------------------------------------------------------------------
+//    8. Assert that there are 4 texts on the Index Page under icons and they have proper text
+    @Test
+    public void checkIconText(){
+    List<WebElement> webElement = driver.findElements(By.cssSelector(".clerafix > .col-sm-3"));
+
+    assertEquals(webElement.get(0).getText(), getExpectedText().get(0));
+    assertEquals(webElement.get(1).getText(), getExpectedText().get(1));
+    assertEquals(webElement.get(2).getText(), getExpectedText().get(2));
+    assertEquals(webElement.get(3).getText(), getExpectedText().get(3));
+
+    }
 //----------------------------------------------------------------------------------------------------------------------
 //    17.Close browser
     @AfterClass
