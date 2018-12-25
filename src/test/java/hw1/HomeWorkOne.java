@@ -53,7 +53,7 @@ public class HomeWorkOne {
         };
     }
 
-    private  List<String> getExpectedText(){
+    private List<String> getExpectedText(){
         return new ArrayList<String>(){
             {   //received values via IDEA Evaluate
                 add("To include good practices\n" +
@@ -66,6 +66,18 @@ public class HomeWorkOne {
                         "(about 20 internal and\n" +
                         "some external projects),\n" +
                         "wish to get more…");
+            }
+        };
+    }
+
+    private List<String> getExpectedHeaderText(){
+        return new ArrayList<String>(){
+            {
+                add("EPAM FRAMEWORK WISHES…");
+                add("LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISICING ELIT, SED DO EIUSMOD TEMPOR INCIDIDUNT UT" +
+                        " LABORE ET DOLORE MAGNA ALIQUA. UT ENIM AD MINIM VENIAM, QUIS NOSTRUD EXERCITATION ULLAMCO " +
+                        "LABORIS NISI UT ALIQUIP EX EA COMMODO CONSEQUAT DUIS AUTE IRURE DOLOR IN REPREHENDERIT IN " +
+                        "VOLUPTATE VELIT ESSE CILLUM DOLORE EU FUGIAT NULLA PARIATUR.");
             }
         };
     }
@@ -159,6 +171,15 @@ public class HomeWorkOne {
     assertEquals(webElement.get(2).getText(), getExpectedText().get(2));
     assertEquals(webElement.get(3).getText(), getExpectedText().get(3));
 
+    }
+//----------------------------------------------------------------------------------------------------------------------
+//    9.Assert a text of the main headers
+    @Test
+    public void checkHeaders(){
+        WebElement webElement = driver.findElement(By.cssSelector("[name='main-title']"));
+        assertEquals(webElement.getText(),getExpectedHeaderText().get(0));
+        webElement = driver.findElement(By.cssSelector("[name='jdi-text']"));
+        assertEquals(webElement.getText(),getExpectedHeaderText().get(1));
     }
 //----------------------------------------------------------------------------------------------------------------------
 //    17.Close browser
