@@ -1,7 +1,6 @@
 package hw1;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
@@ -16,34 +15,23 @@ import static org.testng.Assert.assertTrue;
 
 public class HomeWorkOne {
 
-    public WebDriver driver;
+    public ChromeDriver driver;
 
-    private String getTargetURl() {
-        return "https://epam.github.io/JDI/";
-    }
+    private static final String TARGET_URL = "https://epam.github.io/JDI/";
 
-    private String getExpectedTitle() {
-        return "Home Page";
-    }
 
-    private String getTestUser() {
-        return "epam";
-    }
+    private static final String EXPECTED_TITLE = "Home Page";
 
-    private String getTestPassword() {
-        return "1234";
-    }
+    private static final String TEST_USER = "epam";
 
-    private String getExpectedUserName() {
-        return "PITER CHAILOVSKII";
-    }
 
-    private int getExpectedNavSize() {
-        return 4;
-    }
+    private static final String TEST_PASSWORD = "1234";
 
-    private List<String> getExpectedNavBarText() {
-        return new ArrayList<String>() {
+    private static final String EXPECTED_USER_NAME = "PITER CHAILOVSKII";
+
+    private static final int EXPECTED_NAV_SIZE = 4;
+
+    private static final List<String> EXPECTED_NAV_BAR_TEXT = new ArrayList<String>() {
             {
                 add("HOME");
                 add("CONTACT FORM");
@@ -51,10 +39,8 @@ public class HomeWorkOne {
                 add("METALS & COLORS");
             }
         };
-    }
 
-    private List<String> getExpectedText(){
-        return new ArrayList<String>(){
+    private static final List<String> EXPECTED_TEXT = new ArrayList<String>(){
             {   //received values via IDEA Evaluate
                 add("To include good practices\n" +
                         "and ideas from successful\n" +
@@ -68,10 +54,8 @@ public class HomeWorkOne {
                         "wish to get more…");
             }
         };
-    }
 
-    private List<String> getExpectedHeaderText(){
-        return new ArrayList<String>(){
+    private static final List<String> EXPECTED_HEADER_TEXT = new ArrayList<String>(){
             {
                 add("EPAM FRAMEWORK WISHES…");
                 add("LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISICING ELIT, SED DO EIUSMOD TEMPOR INCIDIDUNT UT" +
@@ -80,15 +64,10 @@ public class HomeWorkOne {
                         "VOLUPTATE VELIT ESSE CILLUM DOLORE EU FUGIAT NULLA PARIATUR.");
             }
         };
-    }
 
-    private String getExpectedSubHeaderText(){
-        return "JDI GITHUB";
-    }
+    private static final String EXPECTED_SUB_HEADER_TEXT = "JDI GITHUB";
 
-    private String getExpectedURL(){
-        return "https://github.com/epam/JDI";
-    }
+    private static final String EXPECTED_URL = "https://github.com/epam/JDI";
 
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -98,27 +77,27 @@ public class HomeWorkOne {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 //        Why this doesn't work if invoked in next @Test?
-        driver.navigate().to(getTargetURl());
+        driver.navigate().to(TARGET_URL);
    }
 //----------------------------------------------------------------------------------------------------------------------
 //   1. Open test site by URL
     @Test
     public void navigateTo(){
-       driver.navigate().to(getTargetURl());
+       driver.navigate().to(TARGET_URL);
     }
 //----------------------------------------------------------------------------------------------------------------------
 //    2. Assert Browser title
     @Test
     public void checkTitle(){
-       assertEquals(driver.getTitle(), getExpectedTitle());
+       assertEquals(driver.getTitle(), EXPECTED_TITLE);
     }
 //----------------------------------------------------------------------------------------------------------------------
 //    3.Perform login
     @Test
     public void checkLoginActions(){
         driver.findElement(By.cssSelector(".profile-photo")).click();
-        driver.findElement(By.cssSelector("#Name")).sendKeys(getTestUser());
-        driver.findElement(By.cssSelector("#Password")).sendKeys(getTestPassword());
+        driver.findElement(By.cssSelector("#Name")).sendKeys(TEST_USER);
+        driver.findElement(By.cssSelector("#Password")).sendKeys(TEST_PASSWORD);
         driver.findElement(By.cssSelector(".login [type = 'submit']")).click();
     }
 //----------------------------------------------------------------------------------------------------------------------
@@ -126,30 +105,30 @@ public class HomeWorkOne {
     @Test(dependsOnMethods = {"checkLoginActions"})
     public void checkUserName() {
         WebElement userNameElement = driver.findElement(By.cssSelector(".profile-photo span"));
-        assertEquals(userNameElement.getText(), getExpectedUserName());
+        assertEquals(userNameElement.getText(), EXPECTED_USER_NAME);
     }
 //----------------------------------------------------------------------------------------------------------------------
 //    5. Assert Browser title
     @Test
     public void checkTitle2(){
-        assertEquals(driver.getTitle(), getExpectedTitle());
+        assertEquals(driver.getTitle(), EXPECTED_TITLE);
     }
 //----------------------------------------------------------------------------------------------------------------------
 //    6.Assert that there are 4 items on the header section are displayed and they have proper texts
     @Test
     public void checkNavBar() {
         List<WebElement> navElems = driver.findElements(By.cssSelector(".navbar-nav.m-l8 > li"));
-        assertEquals(navElems.size(), getExpectedNavSize());
+        assertEquals(navElems.size(), EXPECTED_NAV_SIZE);
 //        Comparing Text in navigation bar li elems with List of expected Strings
 //        TODO: Refactor assert logic
 //        for (WebElement li : navElems
 //        ) {
 //            assertTrue(getExpectedNavBarText().contains(li.getText()));
 //        }
-        assertEquals(navElems.get(0).getText(),getExpectedNavBarText().get(0));
-        assertEquals(navElems.get(1).getText(),getExpectedNavBarText().get(1));
-        assertEquals(navElems.get(2).getText(),getExpectedNavBarText().get(2));
-        assertEquals(navElems.get(3).getText(),getExpectedNavBarText().get(3));
+        assertEquals(navElems.get(0).getText(),EXPECTED_NAV_BAR_TEXT.get(0));
+        assertEquals(navElems.get(1).getText(),EXPECTED_NAV_BAR_TEXT.get(1));
+        assertEquals(navElems.get(2).getText(),EXPECTED_NAV_BAR_TEXT.get(2));
+        assertEquals(navElems.get(3).getText(),EXPECTED_NAV_BAR_TEXT.get(3));
     }
 //----------------------------------------------------------------------------------------------------------------------
 //    7. Assert that there are 4 images on the Index Page and they are displayed
@@ -173,19 +152,19 @@ public class HomeWorkOne {
     public void checkIconText(){
     List<WebElement> webElement = driver.findElements(By.cssSelector(".clerafix > .col-sm-3"));
 
-    assertEquals(webElement.get(0).getText(), getExpectedText().get(0));
-    assertEquals(webElement.get(1).getText(), getExpectedText().get(1));
-    assertEquals(webElement.get(2).getText(), getExpectedText().get(2));
-    assertEquals(webElement.get(3).getText(), getExpectedText().get(3));
+    assertEquals(webElement.get(0).getText(), EXPECTED_TEXT.get(0));
+    assertEquals(webElement.get(1).getText(), EXPECTED_TEXT.get(1));
+    assertEquals(webElement.get(2).getText(), EXPECTED_TEXT.get(2));
+    assertEquals(webElement.get(3).getText(), EXPECTED_TEXT.get(3));
     }
 //----------------------------------------------------------------------------------------------------------------------
 //    9.Assert a text of the main headers
     @Test
     public void checkHeaders(){
         WebElement webElement = driver.findElement(By.cssSelector("[name='main-title']"));
-        assertEquals(webElement.getText(),getExpectedHeaderText().get(0));
+        assertEquals(webElement.getText(), EXPECTED_HEADER_TEXT.get(0));
         webElement = driver.findElement(By.cssSelector("[name='jdi-text']"));
-        assertEquals(webElement.getText(),getExpectedHeaderText().get(1));
+        assertEquals(webElement.getText(), EXPECTED_HEADER_TEXT.get(1));
     }
 //----------------------------------------------------------------------------------------------------------------------
 //    10.Assert that there is the iframe in the center of page
@@ -210,7 +189,7 @@ public class HomeWorkOne {
     @Test
     public void checkSubHeaderText(){
         WebElement subHeader = driver.findElement(By.cssSelector("h3 > [target = '_blank']"));
-        assertEquals(subHeader.getText(), getExpectedSubHeaderText());
+        assertEquals(subHeader.getText(), EXPECTED_SUB_HEADER_TEXT);
     }
 //----------------------------------------------------------------------------------------------------------------------
 //    14.Assert that JDI GITHUB is a link and has a proper URL.Assert a text of the sub header
@@ -218,7 +197,7 @@ public class HomeWorkOne {
     public void checkLink(){
         //TODO: refactor
         assertTrue(driver.findElement(By.linkText("JDI GITHUB")).isDisplayed());
-        assertEquals(driver.findElement(By.linkText("JDI GITHUB")).getAttribute("href"), getExpectedURL());
+        assertEquals(driver.findElement(By.linkText("JDI GITHUB")).getAttribute("href"), EXPECTED_URL);
 
     }
 //----------------------------------------------------------------------------------------------------------------------
