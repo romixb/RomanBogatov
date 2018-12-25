@@ -82,6 +82,13 @@ public class HomeWorkOne {
         };
     }
 
+    private String getExpectedSubHeaderText(){
+        return "JDI GITHUB";
+    }
+
+    private String getExpectedURL(){
+        return "https://github.com/epam/JDI";
+    }
 
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -128,7 +135,7 @@ public class HomeWorkOne {
         assertEquals(driver.getTitle(), getExpectedTitle());
     }
 //----------------------------------------------------------------------------------------------------------------------
-//    5.Assert that there are 4 items on the header section are displayed and they have proper texts
+//    6.Assert that there are 4 items on the header section are displayed and they have proper texts
     @Test
     public void checkNavBar() {
         List<WebElement> navElems = driver.findElements(By.cssSelector(".navbar-nav.m-l8 > li"));
@@ -170,7 +177,6 @@ public class HomeWorkOne {
     assertEquals(webElement.get(1).getText(), getExpectedText().get(1));
     assertEquals(webElement.get(2).getText(), getExpectedText().get(2));
     assertEquals(webElement.get(3).getText(), getExpectedText().get(3));
-
     }
 //----------------------------------------------------------------------------------------------------------------------
 //    9.Assert a text of the main headers
@@ -180,6 +186,54 @@ public class HomeWorkOne {
         assertEquals(webElement.getText(),getExpectedHeaderText().get(0));
         webElement = driver.findElement(By.cssSelector("[name='jdi-text']"));
         assertEquals(webElement.getText(),getExpectedHeaderText().get(1));
+    }
+//----------------------------------------------------------------------------------------------------------------------
+//    10.Assert that there is the iframe in the center of page
+    @Test
+    public void checkIframe(){
+        WebElement iFrame = driver.findElement(By.id("iframe"));
+        assertTrue(iFrame.isDisplayed());
+    }
+//----------------------------------------------------------------------------------------------------------------------
+//    11.Switch to the iframe and check that there is Epam logo in the left top conner of iframe
+    @Test
+    public void checkIframeLogo(){
+        driver.switchTo().frame("iframe");
+        WebElement logo = driver.findElement(By.id("epam_logo"));
+        assertTrue(logo.isDisplayed());
+
+//    12.Switch to original window back
+        driver.switchTo().defaultContent();
+    }
+//----------------------------------------------------------------------------------------------------------------------
+//    13.Assert a text of the sub header
+    @Test
+    public void checkSubHeaderText(){
+        WebElement subHeader = driver.findElement(By.cssSelector("h3 > [target = '_blank']"));
+        assertEquals(subHeader.getText(), getExpectedSubHeaderText());
+    }
+//----------------------------------------------------------------------------------------------------------------------
+//    14.Assert that JDI GITHUB is a link and has a proper URL.Assert a text of the sub header
+    @Test
+    public void checkLink(){
+        //TODO: refactor
+        assertTrue(driver.findElement(By.linkText("JDI GITHUB")).isDisplayed());
+        assertEquals(driver.findElement(By.linkText("JDI GITHUB")).getAttribute("href"), getExpectedURL());
+
+    }
+//----------------------------------------------------------------------------------------------------------------------
+//    15.Assert that there is Left Section
+    @Test
+    public void checkLeftSection(){
+        WebElement leftSection = driver.findElement(By.id("mCSB_1"));
+        assertTrue(leftSection.isDisplayed());
+    }
+//----------------------------------------------------------------------------------------------------------------------
+//    16.Assert that there is Footer
+    @Test
+    public void checkFooter(){
+        WebElement footer = driver.findElement(By.cssSelector(".footer-content"));
+        assertTrue(footer.isDisplayed());
     }
 //----------------------------------------------------------------------------------------------------------------------
 //    17.Close browser
