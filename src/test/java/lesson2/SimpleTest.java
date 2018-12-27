@@ -20,19 +20,19 @@ public class SimpleTest extends TestBase {
     private WebDriver driver;
 
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void beforeTest(){
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void afterMethod(){
         driver.close();
     }
 
-    @Test
+    @Test(groups = "Group1")
     public void simpleTest(){
         //2. Navigate
         driver.navigate().to("https://epam.github.io/JDI/index.html");
@@ -45,7 +45,7 @@ public class SimpleTest extends TestBase {
         driver.findElement(By.cssSelector(".login [type = 'submit']")).click();
 
         WebElement title = driver.findElement(By.cssSelector(".main-title"));
-        assertEquals(title.getText(), "EPAM FRAMEWORK WISHES…");
+        assertEquals(title.getText(), "EPAM FRAMEWORK WISHES…");//This test fails because
     }
 }
 
