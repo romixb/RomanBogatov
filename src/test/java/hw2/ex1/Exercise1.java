@@ -18,7 +18,8 @@ import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.assertEquals;
 
-public class Exercise1 extends TestBase {
+public class
+Exercise1 extends TestBase {
 
     private WebDriver driver;
 

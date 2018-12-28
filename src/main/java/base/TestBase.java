@@ -1,5 +1,7 @@
 package base;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
@@ -11,6 +13,7 @@ import static java.lang.System.setProperty;
 public class TestBase {
 
     private long time;
+
 
     @BeforeSuite
     public void beforeSuite(){
