@@ -13,7 +13,7 @@ public class DataProviders {
         };
     }
 
-    @DataProvider
+    @DataProvider(parallel = true)
     public Object[][] checkIconTextDataProvider(){
         return new Object[][]{
                 {0, "To include good practices\nand ideas from successful\nEPAM project"},

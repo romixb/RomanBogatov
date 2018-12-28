@@ -1,5 +1,6 @@
 package hw2.ex1;
 
+import base.TestBase;
 import lesson2.ChromeDriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,9 +18,9 @@ import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.assertEquals;
 
-public class Exercise1 {
+public class Exercise1 extends TestBase {
 
-    WebDriver driver;
+    private WebDriver driver;
 
     @BeforeClass
     public void beforeClass(){
@@ -34,7 +35,7 @@ public class Exercise1 {
         driver.close();
     }
 
-    @Test( dataProvider = "checkIconTextDataProvider", dataProviderClass = DataProviders.class)
+    @Test(threadPoolSize = 3, invocationCount = 10, dataProvider = "checkIconTextDataProvider", dataProviderClass = DataProviders.class)
     public void checkTextIcon(int i, String s){
         driver.navigate().to("https://epam.github.io/JDI/index.html");
         List<WebElement> webElements = driver.findElements(By.cssSelector(".clerafix > .col-sm-3"));
